@@ -6,7 +6,6 @@ Follow these steps precisely:
 
 1.  **Determine Project Name:**
     *   First, determine the name of your current working directory. Let's call this `PROJECT_NAME`. You can get this by running `basename $(pwd)`.
-    *   Then, navigate to the parent directory: `cd ..`
     *   Proceed to the next step.
 
 2.  **Check Environment:** You must verify that the environment has PHP 8.4+, Bun, and Composer installed.
@@ -32,9 +31,8 @@ Follow these steps precisely:
         *   After creating the file, display this exact message to the user: "The required environment (PHP 8.4, bun, composer) is not set up. I have created a '.idx/dev.nix' file to configure it. Please rebuild Firebase Studio to apply the changes, and then run the installation again."
         *   Then, STOP.
     *   **If all three environment checks in step 2 pass:**
-        *   Remove the original project directory (which is now a subdirectory of your current location): `rm -rf "$PROJECT_NAME"`
         *   Proceed to install Laravel by running the following command, replacing `PROJECT_NAME` with the actual project name determined in step 1:
-            `composer create-project nunomaduro/laravel-starter-kit --prefer-dist "$PROJECT_NAME"`
+            `cd .. && rm -rf "$PROJECT_NAME" && composer create-project nunomaduro/laravel-starter-kit --prefer-dist "$PROJECT_NAME"`
         *   After the installation, navigate into the project directory (which will be named `PROJECT_NAME`) and initialize a git repository, stage all files, and commit them with the message "WIP".
         *   Then, delete the following folders and files from the project directory: .cursor, .junie, art, .mpc.json, AGENTS.md, boost.json, CLAUDE.md, package.json, README.md.
         *   After deleting the files, stage all changes. Then, list the deleted files ('.cursor', '.junie', 'art', '.mpc.json', 'AGENTS.md', 'boost.json', 'CLAUDE.md', 'package.json', 'README.md') and ask the user if all looks good. If the user confirms, commit with the message "WIP".
