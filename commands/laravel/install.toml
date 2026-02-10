@@ -36,14 +36,17 @@ Follow these steps precisely:
     *   Run: `cd "$PROJECT_NAME" && git init && git add . && git commit -m "WIP"`.
     *   Run: `composer require laravel/sail --dev`.
     *   Run: `php artisan sail:install --devcontainer`.
+    *   Run: `git add .`.
+    *   Run: `git status`.
+    *   If output is okay, proceed to next step.
+    *   Commit the changes: `git commit -m "WIP"`.
 
 3.  **Enable Docker:**
     *   Create a file at `.idx/dev.nix` with the following content:
         ```nix
-        { pkgs }: {
-          services.docker.enable = true;
-        }
+        {}: {services.docker.enable = true;}
         ```
+    *   Run: write `*` to `.idx/.gitignore`.
     *   After creating the file, STOP and display this exact message to the user: "Docker has been enabled. Please rebuild Firebase Studio, then run the installation command again to complete the setup."
     *   STOP.
 
@@ -55,7 +58,7 @@ Follow these steps precisely:
 
 3.1. **Publish Sail and Clean Up:**
     *   Run: echo "alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'" >> ~/.bash_aliases
-    *   Then, using edit tools, add `APP_PORT=8000` right after `APP_URL` in `.env`.
+    *   Run: echo "APP_PORT=8000" >> .env
     *   Run: `./vendor/bin/sail up -d`.
     *   Run: echo "chown -R sail storage bootstrap/cache" | ./vendor/bin/sail root-shell
     *   Run: echo "php artisan sail:publish" | ./vendor/bin/sail root-shell
@@ -63,8 +66,12 @@ Follow these steps precisely:
     *   Run: mv ./docker/mysql/* ./.devcontainer/
     *   Then, using edit tools, update the `laravel.test` service's `build.context` in `compose.yaml` from `'./docker/8.5'` to `'./.devcontainer'`.
     *   Then, using edit tools, update the `mysql` service's volume path for `create-testing-database.sh` in `compose.yaml` from `'./docker/mysql/create-testing-database.sh'` to `'./.devcontainer/create-testing-database.sh'`.
-    *   Then, using edit tools, read `composer.json` and remove all commands related to 'bun' and 'bunx'.
+    *   Then, using edit tools, read `composer.json` and:
+    *   In "scripts.dev", update the "bunx concurrently" command to: "bunx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan schedule:work\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" --names=schedule,queue,logs --kill-others".
+    *   Remove all other commands related to "bun" and "bunx" from the "scripts" section.
     *   Then, run: `rm -rf .cursor .junie art .mcp.json AGENTS.md boost.json CLAUDE.md package.json README.md docker`.
     *   Run: `git add .`.
+    *   Run: `git status`.
+    *   If output is okay, proceed to next step.
     *   Commit the changes: `git commit -m "WIP"`.
 """
