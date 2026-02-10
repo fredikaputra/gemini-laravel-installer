@@ -54,10 +54,17 @@ Follow these steps precisely:
     *   Otherwise, display an error message and STOP: "Project is in an inconsistent state. Docker is not enabled. Please start from a clean directory."
 
 3.1. **Publish Sail and Clean Up:**
-    *   Run: `./vendor/bin/sail artisan sail:publish`.
+    *   Run: echo "alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'" >> ~/.bash_aliases
+    *   Then, using edit tools, add `APP_PORT=8000` right after `APP_URL` in `.env`.
+    *   Run: `./vendor/bin/sail up -d`.
+    *   Run: echo "chown -R sail storage bootstrap/cache" | ./vendor/bin/sail root-shell
+    *   Run: echo "php artisan sail:publish" | ./vendor/bin/sail root-shell
+    *   Run: mv ./docker/8.5/* ./.devcontainer/
+    *   Run: mv ./docker/mysql/* ./.devcontainer/
+    *   Then, using edit tools, update the `laravel.test` service's `build.context` in `compose.yaml` from `'./docker/8.5'` to `'./.devcontainer'`.
+    *   Then, using edit tools, update the `mysql` service's volume path for `create-testing-database.sh` in `compose.yaml` from `'./docker/mysql/create-testing-database.sh'` to `'./.devcontainer/create-testing-database.sh'`.
     *   Then, using edit tools, read `composer.json` and remove all commands related to 'bun' and 'bunx'.
-    *   Then, run: `rm -rf .cursor .junie art .mcp.json AGENTS.md boost.json CLAUDE.md package.json README.md`.
+    *   Then, run: `rm -rf .cursor .junie art .mcp.json AGENTS.md boost.json CLAUDE.md package.json README.md docker`.
     *   Run: `git add .`.
     *   Commit the changes: `git commit -m "WIP"`.
-
 """
