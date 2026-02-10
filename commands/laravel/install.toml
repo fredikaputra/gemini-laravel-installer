@@ -32,8 +32,10 @@ Follow these steps precisely:
         *   Then, STOP.
     *   **If all three environment checks in step 2 pass:**
         *   Proceed to install Laravel by running the following command, replacing `PROJECT_NAME` with the actual project name determined in step 1:
-            `cd .. && rm -rf "$PROJECT_NAME" && composer create-project nunomaduro/laravel-starter-kit --prefer-dist "$PROJECT_NAME"`
-        *   After the installation, navigate into the project directory (which will be named `PROJECT_NAME`) and initialize a git repository, stage all files, and commit them with the message "WIP".
-        *   Then, delete the following folders and files from the project directory: .cursor, .junie, art, .mpc.json, AGENTS.md, boost.json, CLAUDE.md, package.json, README.md.
-        *   After deleting the files, stage all changes. Then, list the deleted files ('.cursor', '.junie', 'art', '.mpc.json', 'AGENTS.md', 'boost.json', 'CLAUDE.md', 'package.json', 'README.md') and ask the user if all looks good. If the user confirms, commit with the message "WIP".
+            `cd .. && rm -rf "$PROJECT_NAME" && composer create-project nunomaduro/laravel-starter-kit --prefer-dist "$PROJECT_NAME" && cd "$PROJECT_NAME"`
+        *   Then, run the following commands: `cd "$PROJECT_NAME" && git init && git add . && git commit -m "WIP"`
+        *   Then, run the following command to delete specified folders and files: `cd "$PROJECT_NAME" && rm -rf .cursor .junie art .mcp.json AGENTS.md boost.json CLAUDE.md package.json README.md`
+        *   After deleting the files, run the following command to stage all changes: `cd "$PROJECT_NAME" && git add .`
+        *   Then, list the deleted files ('.cursor', '.junie', 'art', '.mcp.json', 'AGENTS.md', 'boost.json', 'CLAUDE.md', 'package.json', 'README.md') and ask the user if all looks good.
+        *   If the user confirms, run the following command to commit with the message "WIP": `cd "$PROJECT_NAME" && git commit -m "WIP"`.
 """
