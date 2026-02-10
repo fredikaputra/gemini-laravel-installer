@@ -1,0 +1,5 @@
+{
+  "name": "gemini-laravel-installer",
+  "version": "1.0.0",
+  "description": "Gemini CLI extension for installing and managing Laravel projects, offering streamlined commands for common development tasks."
+}
